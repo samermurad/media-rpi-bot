@@ -39,7 +39,17 @@ type Message struct {
 	Date      time.Duration `json:"date"`
 }
 
+type BotMessageParseMode string
+
+const (
+	HTML       BotMessageParseMode = "HTML"
+	Markdown   BotMessageParseMode = "Markdown"
+	MarkdownV2 BotMessageParseMode = "MarkdownV2"
+)
+
 type BotMessage struct {
-	ChatId int64  `json:"chat_id"`
-	Text   string `json:"text"`
+	ChatId    int64               `json:"chat_id"`
+	Text      string              `json:"text"`
+	ParseMode BotMessageParseMode `json:"parse_mode"`
+	MessageId int64               `json:"message_id,omitempty"`
 }

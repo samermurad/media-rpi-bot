@@ -2,6 +2,7 @@ package v2
 
 import (
 	"encoding/json"
+	"time"
 )
 
 type RequestBuilder interface {
@@ -13,6 +14,7 @@ type RequestBuilder interface {
 	MarshalBody(interface{}) RequestBuilder
 	Build() Request
 	AppendUrl(string) RequestBuilder
+	SetTimeout(time.Duration) RequestBuilder
 }
 
 type reqBuild struct {
@@ -38,7 +40,6 @@ func (reqB reqBuild) Get() RequestBuilder {
 	return reqB
 }
 func (reqB reqBuild) SetHeaders(dict map[string]string) RequestBuilder {
-	// reqB.req.SetHeaders
 	if reqB.req.headers == nil {
 		reqB.req.headers = make(map[string]string)
 	}
@@ -73,6 +74,11 @@ func (reqB reqBuild) MarshalBody(data interface{}) RequestBuilder {
 
 func (reqB reqBuild) AppendUrl(url string) RequestBuilder {
 	reqB.req.url += url
+	return reqB
+}
+
+func (reqB reqBuild) SetTimeout(timeout time.Duration) RequestBuilder {
+	reqB.req.timeout = timeout
 	return reqB
 }
 func (reqB reqBuild) Build() Request {
