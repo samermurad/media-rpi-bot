@@ -5,34 +5,25 @@ import (
 	"fmt"
 	"time"
 
-	"samermurad.com/piBot/api"
+	"samermurad.com/piBot/telegram"
+	"samermurad.com/piBot/telegram/models"
+
 	"samermurad.com/piBot/cmds"
 	"samermurad.com/piBot/config"
 	"samermurad.com/piBot/timeutils"
 )
 
 func attemptListeningToCmd(ch chan TrgmRes) {
-	cb := make(chan (*api.ApiResponse))
-	go api.GetUpdates(15*time.Second, config.CHAT_OFFSET(), cb)
+	cb := make(chan (*models.ServerResponse))
+	go telegram.GetUpdates(config.CHAT_OFFSET(), 15*time.Second, cb)
 	data := <-cb
-	var obj api.TelegramGetUpdatesResponse
-	err := json.Unmarshal(data.RawBody, &obj)
-
-	if err != nil {
-		ch <- TrgmRes{
-			Res:   nil,
-			Error: err,
-		}
-	} else {
-		ch <- TrgmRes{
-			Res:   &obj,
-			Error: nil,
-		}
+	ch <- TrgmRes{
+		Res:   data,
+		Error: nil,
 	}
 }
 
-
-func Listener(dispatch chan<- *api.TelegramUpdate) {
+func Listener(dispatch chan<- *models.Update) {
 	updateRes := make(chan TrgmRes)
 	for {
 		boom := time.After(500 * time.Millisecond)
@@ -44,8 +35,16 @@ func Listener(dispatch chan<- *api.TelegramUpdate) {
 		if data.Error != nil {
 			fmt.Println("Error getting updates", data.Error)
 		} else {
-			if data.Res.Ok && len(data.Res.Result) > 0 {
-				first := data.Res.Result[0]
+			if data.Res.Ok {
+				b, _ := data.Res.Result.([]interface{})
+				updates := make([]models.Update, len(b))
+				for i := range b {
+					jsonbody, _ := json.Marshal(b[i].(map[string]interface{}))
+					u := new(models.Update)
+					json.Unmarshal(jsonbody, u)
+					updates[i] = *u
+				}
+				first := updates[0]
 				config.SET_CHAT_OFFSET(first.UpdateId + 1)
 				dispatch <- &first
 			}
@@ -53,7 +52,7 @@ func Listener(dispatch chan<- *api.TelegramUpdate) {
 	}
 }
 
-func Handler(cmdMapping map[string]cmds.Command, source <-chan *api.TelegramUpdate) {
+func Handler(cmdMapping map[string]cmds.Command, source <-chan *models.Update) {
 	startTime := timeutils.Seconds()
 	for {
 		fmt.Println("Handler before update := <-source")

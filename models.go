@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"samermurad.com/piBot/api"
+	"samermurad.com/piBot/telegram/models"
 )
 
 type TMCommand struct {
@@ -16,6 +16,6 @@ func (cmd *TMCommand) String() string {
 }
 
 type CmdExecData struct {
-	Message *api.TelegramMssage
+	Message *models.Message
 	Cmd     *TMCommand
 }

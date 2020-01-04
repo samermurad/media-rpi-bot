@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"samermurad.com/piBot/telegram"
+	"samermurad.com/piBot/telegram/models"
+
 	"samermurad.com/piBot/api"
 	"samermurad.com/piBot/config"
 )
@@ -28,7 +31,7 @@ func IsChatAuthorized(cId int64) bool {
 	}
 	return false
 }
-func ParseCmdFromMessage(msg *api.TelegramMssage) (*TMCommand, error) {
+func ParseCmdFromMessage(msg *models.Message) (*TMCommand, error) {
 	cmd := &TMCommand{}
 	msgText := msg.Text
 	cmds := len(msg.Entities)
@@ -64,13 +67,13 @@ func MakeContextKey(key string, chatId int64) string {
 	return fmt.Sprintf("%v:%v", chatId, key)
 }
 
-func SendMessageAwait(text string, tmMsg *api.TelegramMssage) chan *api.ApiResponse {
-	msg := api.TelegramOutgoingMessage{
-		ChatId:  tmMsg.Chat.Id,
-		Message: text,
+func SendMessageAwait(text string, tmMsg *models.Message) chan *models.ServerResponse {
+	msg := models.BotMessage{
+		ChatId: tmMsg.Chat.Id,
+		Text:   text,
 	}
-	ch := make(chan *api.ApiResponse)
-	go api.SendMessage(msg, ch)
+	ch := make(chan *models.ServerResponse)
+	go telegram.SendMessage(msg, ch)
 	return ch
 }
 

@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"samermurad.com/piBot/api"
+	"samermurad.com/piBot/telegram"
+	tmM "samermurad.com/piBot/telegram/models"
 )
 
 type EnvVarCommand struct{}
@@ -14,12 +15,12 @@ func (envCmd *EnvVarCommand) Exec(data interface{}) error {
 		if len(data.Cmd.Args) > 0 {
 			key := data.Cmd.Args[0]
 			arg := os.Getenv(key)
-			ch := make(chan *api.ApiResponse)
-			msg := api.TelegramOutgoingMessage{
-				ChatId:  data.Message.Chat.Id,
-				Message: "Here is you arg:\nKey: " + key + "\nValue: " + arg,
+			ch := make(chan *tmM.ServerResponse)
+			msg := tmM.BotMessage{
+				ChatId: data.Message.Chat.Id,
+				Text:   "Here is you arg:\nKey: " + key + "\nValue: " + arg,
 			}
-			go api.SendMessage(msg, ch)
+			go telegram.SendMessage(msg, ch)
 			<-ch
 		}
 	} else {
