@@ -2,6 +2,7 @@ package telegram
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 
 	apiv2 "samermurad.com/piBot/api/v2"
@@ -17,60 +18,90 @@ func apiBuilder() apiv2.RequestBuilder {
 		AddHeader("Content-Type", "application/json")
 }
 
-func run(req apiv2.Request, ch chan<- *models.ServerResponse) {
+func run(req apiv2.Request, res models.Resultable, ch chan<- bool) {
 	middle := make(chan *apiv2.ResponseChannel)
 	go req.Run(middle)
 	data := <-middle
 	if data.Err != nil {
-		ch <- &models.ServerResponse{
-			Ok:     false,
-			Result: nil,
-		}
+		ch <- false
 	} else {
-		res := new(models.ServerResponse)
-		if err := json.Unmarshal(data.Res.Body, res); err != nil {
-			ch <- &models.ServerResponse{
-				Ok:     false,
-				Result: nil,
-			}
+		// ok := new(models.OkResultCheck)
+		if err := json.Unmarshal(data.Res.Body, res); err != nil && !res.IsOk() {
+			fmt.Println(err)
+			ch <- false
 		} else {
-			ch <- res
+			ch <- true
 		}
 	}
 }
-func SendMessage(msg models.BotMessage, ch chan<- *models.ServerResponse) {
-	run(
+func SendMessage(msg models.BotMessage, ch chan<- *models.Message) {
+	type wrapper struct {
+		models.OkResultCheck
+		Message models.Message `json:"result"`
+	}
+	res := new(wrapper)
+	mid := make(chan bool)
+	go run(
 		apiBuilder().
 			AppendUrl("/sendMessage").
 			Post().
 			MarshalBody(msg).
 			Build(),
-		ch,
+		res,
+		mid,
 	)
+	ok := <-mid
+	if ok {
+		ch <- &res.Message
+	} else {
+		ch <- nil
+	}
 }
 
-func EditMessageText(msg models.BotMessage, ch chan<- *models.ServerResponse) {
-	run(
+func EditMessageText(msg models.BotMessage, ch chan<- *models.Message) {
+	res := new(models.MessageResult)
+	mid := make(chan bool)
+	go run(
 		apiBuilder().
 			AppendUrl("/editMessageText").
 			Post().
 			MarshalBody(msg).
 			Build(),
-		ch,
+		res,
+		mid,
 	)
+	ok := <-mid
+	if ok {
+		ch <- &res.Message
+	} else {
+		ch <- nil
+	}
 }
 
-func GetUpdates(updateOffset int64, timeout time.Duration, ch chan<- *models.ServerResponse) {
+func GetUpdates(updateOffset int64, timeout time.Duration, ch chan<- []*models.Update) {
 	mp := make(map[string]interface{})
 	mp["timeout"] = timeout
 	mp["offset"] = updateOffset
-	run(
+	mid := make(chan bool)
+	type wrapper struct {
+		models.OkResultCheck
+		List []*models.Update `json:"result"`
+	}
+	res := new(wrapper)
+	go run(
 		apiBuilder().
 			AppendUrl("/getUpdates").
 			Post().
 			SetTimeout(timeout).
 			MarshalBody(mp).
 			Build(),
-		ch,
+		res,
+		mid,
 	)
+	ok := <-mid
+	if !ok {
+		ch <- nil
+	} else {
+		ch <- res.List
+	}
 }

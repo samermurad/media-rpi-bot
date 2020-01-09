@@ -19,7 +19,7 @@ import (
 )
 
 type TrgmRes struct {
-	Res   *models.ServerResponse
+	Res   []*models.Update
 	Error error
 }
 
@@ -38,6 +38,10 @@ var cmdMapping = map[string]cmds.Command{
 	},
 	"/env": &EnvVarCommand{},
 	"/ls":  &ListCommand{},
+	"/media_structure": &MediaStructureCmd{
+		SrcFolder:  "/Users/samermurad/Movies/NewMedia",
+		DestFolder: "/Users/samermurad/Movies/Dummy",
+	},
 }
 
 func tmDebug(text string) {
@@ -45,7 +49,7 @@ func tmDebug(text string) {
 		ChatId: 68386493,
 		Text:   text,
 	}
-	channel := make(chan *models.ServerResponse)
+	channel := make(chan *models.Message)
 	go telegram.SendMessage(tgm, channel)
 	fmt.Println(text)
 }

@@ -15,7 +15,7 @@ func (envCmd *EnvVarCommand) Exec(data interface{}) error {
 		if len(data.Cmd.Args) > 0 {
 			key := data.Cmd.Args[0]
 			arg := os.Getenv(key)
-			ch := make(chan *tmM.ServerResponse)
+			ch := make(chan *tmM.Message)
 			msg := tmM.BotMessage{
 				ChatId: data.Message.Chat.Id,
 				Text:   "Here is you arg:\nKey: " + key + "\nValue: " + arg,

@@ -67,12 +67,12 @@ func MakeContextKey(key string, chatId int64) string {
 	return fmt.Sprintf("%v:%v", chatId, key)
 }
 
-func SendMessageAwait(text string, tmMsg *models.Message) chan *models.ServerResponse {
+func SendMessageAwait(text string, tmMsg *models.Message) chan *models.Message {
 	msg := models.BotMessage{
 		ChatId: tmMsg.Chat.Id,
 		Text:   text,
 	}
-	ch := make(chan *models.ServerResponse)
+	ch := make(chan *models.Message)
 	go telegram.SendMessage(msg, ch)
 	return ch
 }

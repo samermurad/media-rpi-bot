@@ -12,10 +12,11 @@ func Test(t *testing.T) {
 		ChatId: 68386493,
 		Text:   "Testing New Telegram Api",
 	}
-	ch := make(chan *models.ServerResponse)
+	ch := make(chan *models.Message)
 	go SendMessage(h, ch)
 	data := <-ch
-	assert.Equal(t, data.Ok, true, "Call failed")
+	assert.NotNil(t, data, "Call failed")
+	assert.NotNil(t, data.MessageId, "Call failed")
 }
 
 func TestFormattedMessage(t *testing.T) {
@@ -41,8 +42,9 @@ __underline__
 			` +
 			"```",
 	}
-	ch := make(chan *models.ServerResponse)
+	ch := make(chan *models.Message)
 	go SendMessage(msg, ch)
 	data := <-ch
-	assert.Equal(t, data.Ok, true, "Call failed")
+	assert.NotNil(t, data, "Call failed")
+	assert.NotNil(t, data.MessageId, "Call failed")
 }

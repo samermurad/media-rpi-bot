@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"time"
 
@@ -14,7 +13,7 @@ import (
 )
 
 func attemptListeningToCmd(ch chan TrgmRes) {
-	cb := make(chan (*models.ServerResponse))
+	cb := make(chan ([]*models.Update))
 	go telegram.GetUpdates(config.CHAT_OFFSET(), 15*time.Second, cb)
 	data := <-cb
 	ch <- TrgmRes{
@@ -35,18 +34,10 @@ func Listener(dispatch chan<- *models.Update) {
 		if data.Error != nil {
 			fmt.Println("Error getting updates", data.Error)
 		} else {
-			if data.Res.Ok {
-				b, _ := data.Res.Result.([]interface{})
-				updates := make([]models.Update, len(b))
-				for i := range b {
-					jsonbody, _ := json.Marshal(b[i].(map[string]interface{}))
-					u := new(models.Update)
-					json.Unmarshal(jsonbody, u)
-					updates[i] = *u
-				}
-				first := updates[0]
+			if data.Res != nil {
+				first := data.Res[0]
 				config.SET_CHAT_OFFSET(first.UpdateId + 1)
-				dispatch <- &first
+				dispatch <- first
 			}
 		}
 	}

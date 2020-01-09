@@ -69,7 +69,7 @@ func (req *request) Timeout() time.Duration {
 }
 
 func (req *request) String() string {
-	return fmt.Sprintf("Request: %v: %v -- %v", req.method, req.url, req.body)
+	return fmt.Sprintf("Request: %v: %v -- %v", req.method, req.url, string(req.body))
 }
 
 func (req *request) Run(ch chan *ResponseChannel) {

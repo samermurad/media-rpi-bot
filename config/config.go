@@ -16,8 +16,22 @@ func envOrPanic(key string) string {
 	panic("Must Set " + key)
 }
 
+func envOrDefault(key string, defaultV string) string {
+	if _env := os.Getenv(key); _env != "" {
+		return _env
+	}
+	return defaultV
+}
 func BOT_TOKEN() string {
 	return envOrPanic("BOT_TOKEN")
+}
+
+func MEDIA_SRC_FOLDER() string {
+	return envOrPanic("MEDIA_SRC_FOLDER")
+}
+
+func MEDIA_DEST_FOLDER() string {
+	return envOrPanic("MEDIA_DEST_FOLDER")
 }
 
 var chtsId []int64

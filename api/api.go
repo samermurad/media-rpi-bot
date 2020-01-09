@@ -28,7 +28,7 @@ func apiRequest(req ApiRequest, ch chan *ApiResponse) {
 		return
 	}
 	req.SetHeaders(&_req.Header)
-	fmt.Println("Executing: ", url, req.Method, string(req.Body))
+	fmt.Printf("Executing: %v %v\n%v\n", url, req.Method, string(req.Body))
 	client := &http.Client{}
 	if req.Timeout != 0 {
 		client.Timeout = req.Timeout

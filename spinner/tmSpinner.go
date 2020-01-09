@@ -1,10 +1,10 @@
 package spinner
 
 import (
-	"encoding/json"
 	"fmt"
 
-	"samermurad.com/piBot/api"
+	"samermurad.com/piBot/telegram"
+	"samermurad.com/piBot/telegram/models"
 )
 
 type Spinner interface {
@@ -27,31 +27,27 @@ func getBoolCh() chan bool {
 	chBool := make(chan bool)
 	return chBool
 }
-func getApiResCh() chan *api.ApiResponse {
-	chBool := make(chan *api.ApiResponse)
+func getApiResCh() chan *models.Message {
+	chBool := make(chan *models.Message)
 	return chBool
 }
 
-func getMsg(text string, chId int64) *api.TelegramOutgoingMessage {
-	return &api.TelegramOutgoingMessage{
-		Message: text,
-		ChatId:  chId,
+func getMsg(text string, chId int64) *models.BotMessage {
+	return &models.BotMessage{
+		Text:   text,
+		ChatId: chId,
 	}
 }
 
 func (sp *spinner) Prepare(channel chan bool) {
 	msg := getMsg("Preparing "+sp.description, sp.tmChatId)
 	apiCh := getApiResCh()
-	go api.SendMessage(*msg, apiCh)
-	data := <-apiCh
-	isOk, ok := data.Body["ok"].(bool)
-	if !ok || !isOk {
+	go telegram.SendMessage(*msg, apiCh)
+	if data := <-apiCh; data == nil {
 		channel <- false
 		return
 	} else {
-		res := api.TelegramSenMessageResponse{}
-		_ = json.Unmarshal(data.RawBody, &res)
-		sp.tmMsgId = res.Result.MessageId
+		sp.tmMsgId = data.MessageId
 		channel <- true
 		return
 	}
@@ -81,7 +77,7 @@ func (sp *spinner) Finish(channel chan bool) {
 	sp.didFinish = true
 	msg := getMsg("Done: "+sp.description, sp.tmChatId)
 	ch := getApiResCh()
-	go api.SendMessage(*msg, getApiResCh())
+	go telegram.SendMessage(*msg, ch)
 	<-ch
 	channel <- true
 }
@@ -96,15 +92,15 @@ func (sp *spinner) Progress(steps int, channel chan bool) {
 		return
 	}
 	str := sp.getLoaderString()
-	msg := &api.EditMessage{
+	msg := &models.BotMessage{
 		ChatId:    sp.tmChatId,
 		MessageId: sp.tmMsgId,
 		Text:      str,
 	}
 	apiCh := getApiResCh()
-	go api.EditMessageText(*msg, apiCh)
-	data := <-apiCh
-	if data.Error.Error() != "" {
+	go telegram.EditMessageText(*msg, apiCh)
+
+	if data := <-apiCh; data == nil {
 		channel <- false
 	} else {
 		sp.steps += steps
