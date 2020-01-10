@@ -8,9 +8,7 @@ import (
 )
 
 func TestRequestBuilder(test *testing.T) {
-
 	url := "https://api.telegram.org/bot" + config.BOT_TOKEN() + "/sendMessage"
-	url := ""
 	var msg = map[string]interface{}{
 		"text":    "Basic Message from Request Builder",
 		"chat_id": 68386493,
