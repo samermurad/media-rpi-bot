@@ -10,9 +10,9 @@ import (
 	"samermurad.com/piBot/timeutils"
 	"samermurad.com/piBot/util"
 
-	"samermurad.com/jobDispatcher/dispatch"
 	"samermurad.com/piBot/cmds"
 	"samermurad.com/piBot/config"
+	"samermurad.com/piBot/dispatch"
 )
 
 func attemptListeningToCmd(ch chan TrgmRes) {
