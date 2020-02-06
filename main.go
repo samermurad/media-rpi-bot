@@ -9,6 +9,7 @@ import (
 	"time"
 
 	apiv2 "samermurad.com/piBot/api/v2"
+	"samermurad.com/piBot/util"
 
 	"samermurad.com/piBot/telegram"
 	"samermurad.com/piBot/telegram/models"
@@ -75,8 +76,8 @@ func getEvilInsult() string {
 	return str
 }
 
-func getCmdFromMessage(msg *api.TelegramMssage) (*TMCommand, error) {
-	cmd := &TMCommand{}
+func getCmdFromMessage(msg *api.TelegramMssage) (*util.TMCommand, error) {
+	cmd := &util.TMCommand{}
 	msgText := msg.Text
 	cmds := len(msg.Entities)
 	if cmds == 0 {

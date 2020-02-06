@@ -24,8 +24,10 @@ type Message struct {
 }
 
 type BotMessage struct {
-	ChatId    int64               `json:"chat_id"`
-	Text      string              `json:"text"`
-	ParseMode BotMessageParseMode `json:"parse_mode"`
-	MessageId int64               `json:"message_id,omitempty"`
+	ChatId           int64               `json:"chat_id"`
+	Text             string              `json:"text"`
+	ParseMode        BotMessageParseMode `json:"parse_mode,omitempty"`
+	MessageId        int64               `json:"message_id,omitempty"`
+	ReplyMarkup      ReplyMarkup         `json:"reply_markup,omitempty"`
+	ReplyToMessageId int64               `json:"reply_to_message_id,omitempty"`
 }

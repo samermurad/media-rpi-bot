@@ -6,7 +6,7 @@ import (
 )
 
 type BaseState interface {
-	Handle() reflect.Type
+	OnTick() reflect.Type
 	OnEnter(nextState BaseState)
 	OnExit(prevState BaseState)
 }
@@ -21,7 +21,7 @@ func (p *printState) OnExit(nextState BaseState) {
 	fmt.Println("Exit PrintState")
 }
 
-func (p *printState) Handle() reflect.Type {
+func (p *printState) OnTick() reflect.Type {
 	fmt.Println("Handle PrintState")
 	return nil
 }

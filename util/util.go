@@ -1,4 +1,4 @@
-package main
+package util
 
 import (
 	"fmt"
@@ -12,6 +12,26 @@ import (
 )
 
 type StrArr []string
+
+func SendDebugMessageToSamer(text string) {
+	tgm := models.BotMessage{
+		ChatId: 68386493,
+		Text:   text,
+	}
+	channel := make(chan *models.Message)
+	go telegram.SendMessage(tgm, channel)
+	fmt.Println(text)
+}
+
+func SendQuickTelegramMessage(chatId int64, text string) {
+	tgm := models.BotMessage{
+		ChatId: chatId,
+		Text:   text,
+	}
+	channel := make(chan *models.Message)
+	go telegram.SendMessage(tgm, channel)
+	fmt.Println(text)
+}
 
 func (arr StrArr) FilterEmpty() []string {
 	strs := make([]string, 0)
@@ -72,6 +92,12 @@ func SendMessageAwait(text string, tmMsg *models.Message) chan *models.Message {
 		ChatId: tmMsg.Chat.Id,
 		Text:   text,
 	}
+	ch := make(chan *models.Message)
+	go telegram.SendMessage(msg, ch)
+	return ch
+}
+
+func SendBotMessageAwait(msg models.BotMessage) chan *models.Message {
 	ch := make(chan *models.Message)
 	go telegram.SendMessage(msg, ch)
 	return ch

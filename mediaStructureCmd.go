@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"samermurad.com/piBot/telegram"
+	"samermurad.com/piBot/util"
 
 	"samermurad.com/mediafilestructure/fs"
 	"samermurad.com/piBot/telegram/models"
@@ -52,10 +53,10 @@ func (cmd *MediaStructureCmd) sendTransferForApproval(filesT []fs.FileTransfer, 
 }
 
 func (cmd *MediaStructureCmd) Exec(data interface{}) error {
-	if update, ok := data.(CmdExecData); ok {
+	if update, ok := data.(util.CmdExecData); ok {
 		files := fs.WalkSource(cmd.SrcFolder, cmd.DestFolder)
 		if len(files) == 0 {
-			SendMessageAwait("No New Media", update.Message)
+			util.SendMessageAwait("No New Media", update.Message)
 			return fmt.Errorf("No New Media")
 		}
 		fT := fs.ReadyFileTransfers(files, cmd.DestFolder)

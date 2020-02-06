@@ -6,12 +6,13 @@ import (
 
 	"samermurad.com/piBot/telegram"
 	tmM "samermurad.com/piBot/telegram/models"
+	"samermurad.com/piBot/util"
 )
 
 type EnvVarCommand struct{}
 
 func (envCmd *EnvVarCommand) Exec(data interface{}) error {
-	if data, ok := data.(CmdExecData); ok {
+	if data, ok := data.(util.CmdExecData); ok {
 		if len(data.Cmd.Args) > 0 {
 			key := data.Cmd.Args[0]
 			arg := os.Getenv(key)

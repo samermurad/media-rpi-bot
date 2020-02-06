@@ -67,7 +67,7 @@ func (m *stateMachine) Tick() {
 	if m.currentState == nil {
 		m.initState()
 	}
-	if typ := m.currentState.Handle(); typ != nil && typ != reflect.TypeOf(m.currentState) {
+	if typ := m.currentState.OnTick(); typ != nil && typ != reflect.TypeOf(m.currentState) {
 		if newState := m.states[typ]; newState != nil {
 			m.currentState.OnExit(newState)
 			newState.OnEnter(m.currentState)
