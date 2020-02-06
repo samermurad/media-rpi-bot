@@ -121,7 +121,7 @@ func Handler(cmdMapping map[string]cmds.Command, source <-chan *models.Update) {
 						Args: nil,
 					},
 					"/sync_media": &chatmachine.RunSystemScript{
-						Cmd: "source $HOME/.bashrc && sync_media_server",
+						Cmd: "source /home/pi/.bashrc && sync_media_server",
 					},
 				},
 			}, 10 * time.Second
