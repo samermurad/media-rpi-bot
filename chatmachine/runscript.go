@@ -43,7 +43,7 @@ func (tmB *tmBuffer) Update(txt string) *models.Message {
 }
 func (tmB *tmBuffer) Write(data []byte) (int, error) {
 	str := string(data)
-	go tmB.Update(str)
+	tmB.Update(str)
 	return len(data), nil
 }
 
