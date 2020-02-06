@@ -120,6 +120,9 @@ func Handler(cmdMapping map[string]cmds.Command, source <-chan *models.Update) {
 						Cmd:  "sleep 2 && echo \"Slept for 2 secs\"",
 						Args: nil,
 					},
+					"/sync_media": &chatmachine.RunSystemScript{
+						Cmd: "source $HOME/.bashrc && sync_media_server",
+					},
 				},
 			}, 10 * time.Second
 		} else {
