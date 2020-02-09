@@ -3,7 +3,7 @@ package util
 import (
 	"fmt"
 
-	"samermurad.com/piBot/telegram/models"
+	"www.samermurad.com/piBot/telegram/models"
 )
 
 type TMCommand struct {

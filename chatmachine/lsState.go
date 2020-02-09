@@ -3,7 +3,7 @@ package chatmachine
 import (
 	"io/ioutil"
 
-	"samermurad.com/piBot/util"
+	"www.samermurad.com/piBot/util"
 )
 
 type LsState struct {

@@ -3,8 +3,8 @@ package spinner
 import (
 	"fmt"
 
-	"samermurad.com/piBot/telegram"
-	"samermurad.com/piBot/telegram/models"
+	"www.samermurad.com/piBot/telegram"
+	"www.samermurad.com/piBot/telegram/models"
 )
 
 type Spinner interface {

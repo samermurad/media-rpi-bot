@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"samermurad.com/piBot/config"
+	"www.samermurad.com/piBot/config"
 )
 
 var BASE_URL string = "https://api.telegram.org/bot"

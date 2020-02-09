@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"samermurad.com/piBot/smachine"
+	"www.samermurad.com/piBot/smachine"
 )
 
 type TelegramMessageState struct {

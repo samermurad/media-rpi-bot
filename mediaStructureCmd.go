@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"samermurad.com/piBot/telegram"
-	"samermurad.com/piBot/util"
+	"www.samermurad.com/piBot/telegram"
+	"www.samermurad.com/piBot/util"
 
-	"samermurad.com/mediafilestructure/fs"
-	"samermurad.com/piBot/telegram/models"
+	"www.samermurad.com/mediafilestructure/fs"
+	"www.samermurad.com/piBot/telegram/models"
 )
 
 type MediaStructureCmd struct {

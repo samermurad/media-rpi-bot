@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	apiv2 "samermurad.com/piBot/api/v2"
-	"samermurad.com/piBot/config"
-	"samermurad.com/piBot/telegram/models"
+	apiv2 "www.samermurad.com/piBot/api/v2"
+	"www.samermurad.com/piBot/config"
+	"www.samermurad.com/piBot/telegram/models"
 )
 
 const BASE_URL = "https://api.telegram.org/bot"

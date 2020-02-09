@@ -8,15 +8,15 @@ import (
 	"sync"
 	"time"
 
-	apiv2 "samermurad.com/piBot/api/v2"
-	"samermurad.com/piBot/util"
+	apiv2 "www.samermurad.com/piBot/api/v2"
+	"www.samermurad.com/piBot/util"
 
-	"samermurad.com/piBot/telegram"
-	"samermurad.com/piBot/telegram/models"
+	"www.samermurad.com/piBot/telegram"
+	"www.samermurad.com/piBot/telegram/models"
 
-	"samermurad.com/piBot/api"
-	"samermurad.com/piBot/cmds"
-	"samermurad.com/piBot/cntx"
+	"www.samermurad.com/piBot/api"
+	"www.samermurad.com/piBot/cmds"
+	"www.samermurad.com/piBot/cntx"
 )
 
 type TrgmRes struct {

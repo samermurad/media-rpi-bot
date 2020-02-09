@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"time"
 
-	"samermurad.com/piBot/chatmachine"
-	"samermurad.com/piBot/telegram"
-	"samermurad.com/piBot/telegram/models"
-	"samermurad.com/piBot/timeutils"
-	"samermurad.com/piBot/util"
+	"www.samermurad.com/piBot/chatmachine"
+	"www.samermurad.com/piBot/telegram"
+	"www.samermurad.com/piBot/telegram/models"
+	"www.samermurad.com/piBot/timeutils"
+	"www.samermurad.com/piBot/util"
 
-	"samermurad.com/piBot/cmds"
-	"samermurad.com/piBot/config"
-	"samermurad.com/piBot/dispatch"
+	"www.samermurad.com/piBot/cmds"
+	"www.samermurad.com/piBot/config"
+	"www.samermurad.com/piBot/dispatch"
 )
 
 func attemptListeningToCmd(ch chan TrgmRes) {
@@ -109,8 +109,8 @@ func Handler(cmdMapping map[string]cmds.Command, source <-chan *models.Update) {
 				States: map[string]chatmachine.ChatState{
 					"/ls": &chatmachine.LsState{},
 					"/media_structure": &chatmachine.OrganizeMedia{
-						SrcFolder:  "/Users/samermurad/Movies/NewMedia",
-						DestFolder: "/Users/samermurad/Movies/Dummy",
+						SrcFolder:  config.MEDIA_SRC_FOLDER(),
+						DestFolder: config.MEDIA_DEST_FOLDER(),
 					},
 					"/cmd": &chatmachine.RunSystemScript{
 						Cmd:  "source $HOME/.bashrc && cpip",

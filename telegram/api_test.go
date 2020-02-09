@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"samermurad.com/piBot/telegram/models"
+	"www.samermurad.com/piBot/telegram/models"
 )
 
 func Test(t *testing.T) {

@@ -3,12 +3,13 @@ package chatmachine
 import (
 	"fmt"
 	"os/exec"
+	"strings"
 	"sync"
 
-	"samermurad.com/piBot/telegram"
+	"www.samermurad.com/piBot/telegram"
 
-	"samermurad.com/piBot/telegram/models"
-	"samermurad.com/piBot/util"
+	"www.samermurad.com/piBot/telegram/models"
+	"www.samermurad.com/piBot/util"
 )
 
 type RunSystemScript struct {
@@ -42,7 +43,7 @@ func (tmB *tmBuffer) Update(txt string) *models.Message {
 	return <-ch
 }
 func (tmB *tmBuffer) Write(data []byte) (int, error) {
-	str := string(data)
+	str := strings.Split(string(data), "\n")[0]
 	tmB.Update(str)
 	return len(data), nil
 }

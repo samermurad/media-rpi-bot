@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"strings"
 
-	"samermurad.com/piBot/telegram"
-	"samermurad.com/piBot/telegram/models"
+	"www.samermurad.com/piBot/telegram"
+	"www.samermurad.com/piBot/telegram/models"
 
-	"samermurad.com/piBot/api"
-	"samermurad.com/piBot/config"
+	"www.samermurad.com/piBot/api"
+	"www.samermurad.com/piBot/config"
 )
 
 type StrArr []string

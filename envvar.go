@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"samermurad.com/piBot/telegram"
-	tmM "samermurad.com/piBot/telegram/models"
-	"samermurad.com/piBot/util"
+	"www.samermurad.com/piBot/telegram"
+	tmM "www.samermurad.com/piBot/telegram/models"
+	"www.samermurad.com/piBot/util"
 )
 
 type EnvVarCommand struct{}

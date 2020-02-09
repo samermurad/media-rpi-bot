@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"samermurad.com/piBot/spinner"
+	"www.samermurad.com/piBot/spinner"
 )
 
 func Test1(t *testing.T) {

@@ -1,6 +1,6 @@
 package chatmachine
 
-import "samermurad.com/piBot/telegram/models"
+import "www.samermurad.com/piBot/telegram/models"
 
 type ChatCache interface {
 	SetTextMessage(string)

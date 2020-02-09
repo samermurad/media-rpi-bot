@@ -3,7 +3,7 @@ package cntx
 import (
 	"sync"
 
-	"samermurad.com/piBot/api"
+	"www.samermurad.com/piBot/api"
 )
 
 type ActionFunction func(*api.TelegramMssage) *api.ApiResponse

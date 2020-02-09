@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"samermurad.com/piBot/config"
+	"www.samermurad.com/piBot/config"
 )
 
 func TestRequestBuilder(test *testing.T) {

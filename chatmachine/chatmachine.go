@@ -3,12 +3,12 @@ package chatmachine
 import (
 	"fmt"
 
-	"samermurad.com/piBot/telegram"
+	"www.samermurad.com/piBot/telegram"
 
-	"samermurad.com/piBot/util"
+	"www.samermurad.com/piBot/util"
 
-	"samermurad.com/piBot/config"
-	"samermurad.com/piBot/telegram/models"
+	"www.samermurad.com/piBot/config"
+	"www.samermurad.com/piBot/telegram/models"
 )
 
 const (

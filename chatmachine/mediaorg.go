@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"time"
 
-	"samermurad.com/mediafilestructure/fs"
-	"samermurad.com/piBot/telegram"
-	"samermurad.com/piBot/telegram/models"
-	"samermurad.com/piBot/util"
+	"www.samermurad.com/mediafilestructure/fs"
+	"www.samermurad.com/piBot/telegram"
+	"www.samermurad.com/piBot/telegram/models"
+	"www.samermurad.com/piBot/util"
 )
 
 type OrganizeMediaState int
