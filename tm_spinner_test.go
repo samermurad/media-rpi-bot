@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"testing"
 	"time"
 
@@ -9,6 +10,7 @@ import (
 )
 
 func Test1(t *testing.T) {
+	os.Setenv("BOT_TOKEN", "STUB")
 	sp := spinner.NewTmSpinner(68386493, "Timer Spinner")
 	fmt.Println("WTF")
 	chaa := make(chan bool)

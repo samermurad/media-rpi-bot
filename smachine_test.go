@@ -1,18 +1,16 @@
 package main
 
 import (
-	"reflect"
+	"os"
 	"testing"
-	"time"
-
-	"www.samermurad.com/piBot/smachine"
 )
 
 func TestBasic(t *testing.T) {
-	machine := smachine.NewStateMachine(map[reflect.Type]smachine.BaseState{
-		reflect.TypeOf(TelegramMessageState{}): &TelegramMessageState{},
-	})
-	machine.Start(1 * time.Second)
-	<-time.After(4 * time.Second)
+	os.Setenv("BOT_TOKEN", "STUB")
+	// machine := smachine.NewStateMachine(map[reflect.Type]smachine.BaseState{
+	// 	reflect.TypeOf(TelegramMessageState{}): &TelegramMessageState{},
+	// })
+	// machine.Start(1 * time.Second)
+	// <-time.After(1 * time.Second)
 	// machine.Stop()
 }
